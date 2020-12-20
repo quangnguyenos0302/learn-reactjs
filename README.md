@@ -8,3 +8,8 @@
 6. proptype check.
 7. event.
 8. life cycle.
+
+## hook
+1. useState()
+2. useEffect()
+3. useRef()
