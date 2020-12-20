@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ColorBoxFeature(props) {
-  const arrayColor = ['deeppink', 'orange', 'blue', 'yellow', 'green', 'purple', 'black'];
-  const [colorBox, setColorBox] = useState(() => {
-    if (localStorage.getItem('color')) {
-      return localStorage.getItem('color');
+  const arrayColor = ["deeppink", "green", "yellow", "black", "blue"];
+  const [color, setColor] = useState(() => {
+    if (localStorage.getItem("colorbox")) {
+      return localStorage.getItem("colorbox");
     }
     return arrayColor[0];
   });
-  const handlerColorBoxClick = () => {
-    // get index of array color
-    const index = Math.floor(Math.random() * arrayColor.length);
-    setColorBox(arrayColor[index]);
-    localStorage.setItem('color', arrayColor[index]);
-  }
+  const handlerColorBox = (_) => {
+    let index = Math.floor(Math.random() * arrayColor.length);
+    setColor(arrayColor[index]);
+    localStorage.setItem("colorbox", arrayColor[index]);
+  };
   return (
-    <div style={{backgroundColor: colorBox, height: '50px', width: '50px', cursor: 'pointer'}} onClick={handlerColorBoxClick}>
-      
-    </div>
+    <div
+      style={{ backgroundColor: color, width: "50px", height: "50px" }}
+      onClick={handlerColorBox}
+    ></div>
   );
 }
 

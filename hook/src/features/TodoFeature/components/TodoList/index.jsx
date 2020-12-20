@@ -2,30 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 
 TodoList.propTypes = {
-  listTodo: PropTypes.array,
-  handlerClickTask: PropTypes.func,
+  todoList: PropTypes.array.isRequired,
+  onHandlerTodoClick: PropTypes.func,
 };
 
 TodoList.defaultProps = {
-  listTodo: [],
-  handlerClickTask: null,
+  onHandlerTodoClick: null,
 };
 
 function TodoList(props) {
-  const { listTodo, handlerClickTask } = props;
-  const clickTodo = (task) => {
-    handlerClickTask(task);
+  const { todoList, onHandlerTodoClick } = props;
+  const handlerTodoClick = (todo) => {
+    if (!onHandlerTodoClick) return;
+    onHandlerTodoClick(todo);
   };
   return (
     <ul>
-      {listTodo.map((task) => {
+      {todoList.map((todo) => {
         return (
-          <li
-            key={task.id}
-            onClick={() => clickTodo(task)}
-            style={{ cursor: "pointer" }}
-          >
-            {task.task}
+          <li key={todo.id} onClick={() => handlerTodoClick(todo)}>
+            {todo.title}
           </li>
         );
       })}

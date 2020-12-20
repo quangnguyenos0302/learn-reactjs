@@ -1,10 +1,13 @@
-import './App.css';
-import TodoFeature from './features/TodoFeature';
+import { useState } from "react";
+import "./App.css";
+import ClockFeature from "./features/ClockFeature";
 
 function App() {
+  const [clock, setClock] = useState(true);
   return (
     <div className="App">
-      <TodoFeature></TodoFeature>
+      {clock && <ClockFeature />}
+      <button onClick={() => setClock(false)}>Click me</button>
     </div>
   );
 }

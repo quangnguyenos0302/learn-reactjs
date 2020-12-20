@@ -1,82 +1,35 @@
-import React, { useEffect, useState } from "react";
-import PostFeature from "./components/PostFeature";
-import TodoForm from "./components/TodoForm";
+import React, { useState } from "react";
+import TodoAdd from "./components/TodoAdd";
 import TodoList from "./components/TodoList";
 
-function TodoFeature() {
-  const listTask = [
-    {
-      id: 1,
-      task: "react-js",
-    },
-    {
-      id: 2,
-      task: "vue-js",
-    },
-    {
-      id: 3,
-      task: "node-js",
-    },
-    {
-      id: 4,
-      task: "mongo-db",
-    },
-    {
-      id: 5,
-      task: "angular-js",
-    },
-  ];
-  const [listTodo, setListTodo] = useState(() => {
-    return listTask;
+function TodoFeature(props) {
+  const [todoList, setTodoList] = useState(() => {
+    return [
+      { id: 1, title: "I love Easy Frontend! 😍 " },
+      { id: 2, title: "We love Easy Frontend! 🥰 " },
+      { id: 3, title: "They love Easy Frontend! 🚀 " },
+    ];
   });
-  const [posts, setPosts] = useState(() => {
-    return [];
-  });
-  useEffect(() => {
-    async function fetchAPI() {
-      try {
-        const requestAPI = `http://js-post-api.herokuapp.com/api/posts?_limit=10`;
-        const response = await fetch(requestAPI);
-        const responseAPI = await response.json();
-        const { data } = responseAPI;
-        setPosts(data);
-      } catch (error) {
-        console.log("fetch error: ", error.message);
-      }
-    }
-    fetchAPI();
-  }, []);
-  const handlerClickTask = (task) => {
-    // clone array
-    const cloneListTodo = [...listTodo];
-
-    // remove item when click
-    const index = cloneListTodo.findIndex((x) => x.id === task.id);
-    cloneListTodo.splice(index, 1);
-
-    // set state
-    setListTodo(cloneListTodo);
+  const onHandlerTodoClick = (todo) => {
+    const newTodoList = [...todoList];
+    const index = newTodoList.findIndex((element) => element.id === todo.id);
+    newTodoList.splice(index, 1);
+    setTodoList(newTodoList);
   };
-  const handlerFormValues = (value) => {
-    const cloneListTodo = [...listTodo];
-
+  const onSubmitForm = (valueRecieve) => {
+    const newTodoList = [...todoList];
     const newTodo = {
-      id: listTodo.length + 1,
-      ...value,
+      id: todoList.length <= 0 ? 1 : todoList[todoList.length - 1].id + 1,
+      ...valueRecieve,
     };
-
-    cloneListTodo.push(newTodo);
-
-    setListTodo(cloneListTodo);
+    newTodoList.push(newTodo);
+    setTodoList(newTodoList);
+    console.log(newTodoList);
   };
   return (
     <div>
-      <TodoForm handlerFormValues={handlerFormValues}></TodoForm>
-      <TodoList
-        listTodo={listTodo}
-        handlerClickTask={handlerClickTask}
-      ></TodoList>
-      <PostFeature posts={posts} />
+      <TodoAdd onSubmitForm={onSubmitForm} />
+      <TodoList todoList={todoList} onHandlerTodoClick={onHandlerTodoClick} />
     </div>
   );
 }
